@@ -3,7 +3,7 @@ import supertest from 'supertest';
 
 import { BAD_REQUEST, CREATED, OK } from 'http-status-codes';
 import { Response, SuperTest, Test } from 'supertest';
-import { IUser, User } from '@entities';
+import { IUser, User } from 'src/models';
 import { UserDao } from 'controllers';
 import { pErr, paramMissingError } from '@shared';
 

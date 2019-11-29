@@ -1,11 +1,11 @@
 export interface UserLoginDto {
-  email: string;
-  pw: string;
+  username: string;
+  password: string;
 }
 
 export interface UserRegisterDto {
-  email: string;
-  pw: string;
+  username: string;
+  password: string;
   walletId: string;
 }
 

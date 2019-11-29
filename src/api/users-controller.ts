@@ -1,17 +1,14 @@
-import { logger } from "@shared";
-import { Request, Response, Router, Express } from "express";
-import { BAD_REQUEST, CREATED, OK } from "http-status-codes";
-import { paramMissingError } from "@shared";
-import { ParamsDictionary } from "express-serve-static-core";
-
-// Init shared
-const router = Router();
+import { logger } from '@shared';
+import { Request, Response, Router, Express } from 'express';
+import { BAD_REQUEST, CREATED, OK } from 'http-status-codes';
+import { paramMissingError } from '@shared';
+import { ParamsDictionary } from 'express-serve-static-core';
 
 /******************************************************************************
  *                       Add One - "POST /api/users/add"
  ******************************************************************************/
 
-router.post("/register", async (req, res, next) => {
+export async function register(req: Request, res: Response) {
   try {
     const userDTO = req.body;
     if (!userDTO) {
@@ -27,13 +24,13 @@ router.post("/register", async (req, res, next) => {
       error: err.message
     });
   }
-});
+}
 
 /******************************************************************************
  *                       Update - "PUT /api/users/update"
  ******************************************************************************/
 
-router.put("/update", async (req: Request, res: Response) => {
+export async function update(req: Request, res: Response) {
   try {
     const { user } = req.body;
     if (!user) {
@@ -50,13 +47,13 @@ router.put("/update", async (req: Request, res: Response) => {
       error: err.message
     });
   }
-});
+}
 
 /******************************************************************************
  *                    Delete - "DELETE /api/users/delete/:id"
  ******************************************************************************/
 
-router.delete("/delete/:id", async (req: Request, res: Response) => {
+export async function remove(req: Request, res: Response) {
   try {
     const { id } = req.params as ParamsDictionary;
     //delete User
@@ -67,10 +64,4 @@ router.delete("/delete/:id", async (req: Request, res: Response) => {
       error: err.message
     });
   }
-});
-
-/******************************************************************************
- *                                     Export
- ******************************************************************************/
-
-export default router;
+}

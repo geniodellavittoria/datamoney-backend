@@ -1,9 +1,8 @@
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
 import logger from 'morgan';
 import path from 'path';
-import BaseRouter from './api';
 import cors from 'cors';
 import authRouter from './routes/auth-router';
 
@@ -16,14 +15,14 @@ const app = express();
 // app.use(logger('dev'));
 let whitelist = ['http://localhost', 'http://localhost:4200'];
 let corsOptions = {
-    origin: function(origin, callback) {
-        //if (whitelist.indexOf(origin) !== -1 || origin == null) {
-            callback(null, true);
-        /*} else {
+  origin: function(origin: any, callback: any) {
+    //if (whitelist.indexOf(origin) !== -1 || origin == null) {
+    callback(null, true);
+    /*} else {
             callback(new Error('Not allowed by CORS'));
         }*/
-    },
-    methods: ['GET', 'PUT', 'POST', 'DELETE'],
+  },
+  methods: ['GET', 'PUT', 'POST', 'DELETE']
 };
 
 app.use(cors(corsOptions));
@@ -31,7 +30,7 @@ app.use(cors(corsOptions));
 // Add middleware/settings/routes to express.
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
