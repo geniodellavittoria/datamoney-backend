@@ -3,7 +3,7 @@ import express from 'express';
 import {Request, Response} from 'express';
 import logger from 'morgan';
 import path from 'path';
-import BaseRouter from './routes';
+import BaseRouter from './api';
 import cors from 'cors';
 import authRouter from './routes/auth-router';
 
