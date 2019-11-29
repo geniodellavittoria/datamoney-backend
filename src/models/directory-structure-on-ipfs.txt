@@ -1,0 +1,9 @@
+userDir (id)
+----user.ts (account)
+----dataDir
+------data.ts (.json)
+
+
+soldDataDir (one per buyer)
+--data.ts (dataXYZ.json)
+
