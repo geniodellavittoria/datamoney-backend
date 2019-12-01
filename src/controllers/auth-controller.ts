@@ -1,7 +1,7 @@
-import {Request, Response} from 'express';
+import {Request, Response} from "express";
 import * as jwt from 'jsonwebtoken';
 import paketboxFileHandler from '../service/paketbox-file-handler';
-import {ErrorMessage} from '../services/DTO/errorMessage';
+import {ErrorMessage} from "../dto/errorMessage";
 
 const AUTH_DELAY = 3 * 60 * 1000; // three minutes
 
@@ -14,7 +14,7 @@ export function login(req: Request, res: Response) {
 
     const token = generateAuthToken({user});
     res.send({
-        token
+        token,
     });
 }
 
@@ -30,11 +30,12 @@ export function authenticate(req: Request, res: Response, next: any) {
         }
         const token = authHeader.replace('Bearer ', '');
         const data = jwt.verify(token, 'WinterIsComingGOT2019'); // todo: remove signature or use key file
-        const user = ''; // todo: get user
+        const user = {}; // todo: get user
         if (!user) {
             throw new Error();
         }
         next();
+
     } catch (error) {
         res.status(401).send(new ErrorMessage(401, 'Not Authorized'));
     }

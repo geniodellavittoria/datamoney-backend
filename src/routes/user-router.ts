@@ -4,7 +4,7 @@ import { register, remove, update } from '../api/users-controller';
 const userRouter = Router();
 const userRoot = '/:id';
 
-userRouter.post('', register);
+userRouter.post('/', register);
 userRouter.put(userRoot, update);
 userRouter.delete(userRoot, remove);
 
