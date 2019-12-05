@@ -1,21 +1,25 @@
 import {Request, Response} from 'express';
 import * as jwt from 'jsonwebtoken';
-import paketboxFileHandler from '../service/paketbox-file-handler';
 import {ErrorMessage} from '../services/DTO/errorMessage';
-
-const AUTH_DELAY = 3 * 60 * 1000; // three minutes
+import {UserLoginDto} from '../services/DTO/userDTO';
+import userService from '../services/user-service';
+import {User} from '../models/user';
 
 export function login(req: Request, res: Response) {
     // find user by username
-    const user = {}; // todo: look for user
-    if (user == null) {
+    const loginForm = req.body as UserLoginDto;
+    if (loginForm == null) {
         return res.status(401).send(new ErrorMessage(401, 'Could not login. Please check role and pin.'));
     }
+    userService.login(loginForm)
+        .then((userDetailsBody: string)  => {
+            const userDetails = JSON.parse(userDetailsBody) as User;
+            return res.send({ token: generateAuthToken(userDetails) });
+        })
+        .catch((err: any) => {
+            res.status(400).json(new ErrorMessage(400, 'Could not log in user!'));
+        });
 
-    const token = generateAuthToken({user});
-    res.send({
-        token
-    });
 }
 
 function generateAuthToken(data: any) {

@@ -1,7 +1,8 @@
 import {UserLoginDto, UserRegisterDto} from './DTO/userDTO';
 import {createHash} from 'crypto';
-import ipfsFileService from '../ipfs/ipfs-file-service';
+import ipfsFileService, {IpfsFileService} from '../ipfs/ipfs-file-service';
 import {User} from '../models/user';
+import {Entries, Entry} from '../ipfs/ipfsModels';
 
 const ipfsClient = require('ipfs-http-client');
 
@@ -56,15 +57,20 @@ export class UserService {
     }
 
     public async login(dto: UserLoginDto) {
-        return ipfsFileService.getElementsFromDir('users').on('response', (res) => {
-            let body = '';
-            res.on('data', (chunk) => {
-                body += chunk;
+        return ipfsFileService.getElementsFromDir(`users/${dto.username}`)
+            .then((userDirElementsBody: string) => {
+                const userDirElements = JSON.parse(userDirElementsBody) as Entries;
+                console.log(userDirElements);
+                if (userDirElements != null) {
+                    const userDetails = userDirElements.Entries.filter((entry: Entry) => entry.Name === IpfsFileService.USER_DETAILS);
+                    if (userDetails != null && userDetails.length > 0) {
+                        return ipfsFileService.getFile(`${IpfsFileService.USERS_DIR}/${dto.username}/${IpfsFileService.USER_DETAILS}`);
+                    }
+                }
+            })
+            .catch((err) => {
+                console.log(err);
             });
-            res.on('end', () => {
-                console.log(body);
-            });
-        });
     }
 
 }

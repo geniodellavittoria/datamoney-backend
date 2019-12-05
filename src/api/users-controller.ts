@@ -5,6 +5,7 @@ import {paramMissingError} from '../shared/misc';
 import {ParamsDictionary} from 'express-serve-static-core';
 import userService from '../services/user-service';
 import {UserLoginDto, UserRegisterDto} from '../services/DTO/userDTO';
+import {ErrorMessage} from '../services/DTO/errorMessage';
 
 /******************************************************************************
  *                       Add One - "POST /api/users/add"
@@ -16,8 +17,12 @@ export async function register(req: Request, res: Response) {
         // todo: handle duplicates of user
         // add User with service
         userService.register(userDTO)
-            .then((res) => {
+            .then((registration) => {
                 return res.status(CREATED).send();
+            })
+            .catch((err) => {
+                console.log(err);
+                return res.status(400).send(new ErrorMessage(400, 'Error on registration'));
             });
     } catch (err) {
         logger.error(err.message, err);

@@ -1,10 +1,13 @@
 import request from 'request';
-import {ipfsApi} from '../config/api';
+import {ipfsApi, ipfsBaseUrl} from '../config/api';
 import * as rp from 'request-promise-native';
 
 request.debug = true;
 
-class IpfsFileService {
+export class IpfsFileService {
+
+  public static USERS_DIR = 'users';
+  public static USER_DETAILS = 'userdetails';
   /**
    * @param dir path (not hashes!)
    */
@@ -30,8 +33,14 @@ class IpfsFileService {
     return rp.get(path);
   }
 
-  public getFile(hash: string) {
-    const path = `${ipfsApi}/ipfs/${hash}`;
+  // todo: should not be used as it uses gui get and not api
+  public getFileFromGUI(hash: string) {
+    const path = `${ipfsBaseUrl}/ipfs/${hash}`;
+    return rp.get(path);
+  }
+
+  public getFile(pathToResource: string = '') {
+    const path = `${ipfsApi.files}/read?arg=/${pathToResource}`;
     return rp.get(path);
   }
 
