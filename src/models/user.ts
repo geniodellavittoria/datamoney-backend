@@ -4,5 +4,5 @@ export interface User {
   privateWalletId: string;
   publicWalletId: string;
   username: string;
-  password: string;
+  password?: string;
 }

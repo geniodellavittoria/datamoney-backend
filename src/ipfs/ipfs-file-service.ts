@@ -1,5 +1,5 @@
 import request from 'request';
-import {ipfsApi, ipfsBaseUrl} from '../config/api';
+import {ipfsApi} from '../config/api';
 import * as rp from 'request-promise-native';
 
 request.debug = true;
@@ -30,12 +30,6 @@ export class IpfsFileService {
 
   public createUserDir(userId: string) {
     let path = `${ipfsApi.files}/mkdir?arg=/users/${userId}`;
-    return rp.get(path);
-  }
-
-  // todo: should not be used as it uses gui get and not api
-  public getFileFromGUI(hash: string) {
-    const path = `${ipfsBaseUrl}/ipfs/${hash}`;
     return rp.get(path);
   }
 
