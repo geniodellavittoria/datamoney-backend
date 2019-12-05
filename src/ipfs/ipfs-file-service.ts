@@ -19,7 +19,6 @@ class IpfsFileService {
 
   public addFile(path: string, filename: string, data: any) {
     let url = `${ipfsApi.add}?pin=false&wrapWithDirectory=false&progress=true&wrap-with-directory=false&stream-channels=true`;
-    // let url = `http://localhost:5001/api/v0/add?pin=false&wrapWithDirectory=false&progress=true&wrap-with-directory=false&stream-channels=true`;
     return rp.post({
       url,
       formData: { data: JSON.stringify(data) },

@@ -17,12 +17,7 @@ export async function register(req: Request, res: Response) {
         // add User with service
         userService.register(userDTO)
             .then((res) => {
-                const user = userService.createUser(userDTO);
-                userService.createUserDetails(user)
-                    .then((copiedUserDetails) => {
-                        console.log(copiedUserDetails);
-                        return res.status(CREATED).send();
-                    });
+                return res.status(CREATED).send();
             });
     } catch (err) {
         logger.error(err.message, err);

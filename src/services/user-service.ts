@@ -10,7 +10,11 @@ export class UserService {
     private ipfs = ipfsClient('http://localhost:5001');
 
     public async register(dto: UserRegisterDto) {
-        return ipfsFileService.createUserDir(dto.username);
+        return ipfsFileService.createUserDir(dto.username)
+            .then((res) => {
+                const user = userService.createUser(dto);
+                return userService.createUserDetails(user);
+            });
     }
 
     public createUser(dto: UserRegisterDto) {
