@@ -8,6 +8,7 @@ export class IpfsFileService {
 
   public static USERS_DIR = 'users';
   public static USER_DETAILS = 'userdetails';
+  public static USER_DATA_DIR = 'data';
   /**
    * @param dir path (not hashes!)
    */
@@ -28,8 +29,8 @@ export class IpfsFileService {
     });
   }
 
-  public createUserDir(userId: string) {
-    let path = `${ipfsApi.files}/mkdir?arg=/users/${userId}`;
+  public createDir(folderPath: string) {
+    let path = `${ipfsApi.files}/mkdir?arg=/users/${folderPath}`;
     return rp.get(path);
   }
 
@@ -38,6 +39,7 @@ export class IpfsFileService {
     return rp.get(path);
   }
 
+  // needed to display file on ipfs UI
   public copy(dir: string, hashResponse: any) {
     let path = `${ipfsApi.files}/cp?arg=/ipfs/${hashResponse.Hash}&arg=${dir}&stream-channels=true`;
     return rp.post(path);
