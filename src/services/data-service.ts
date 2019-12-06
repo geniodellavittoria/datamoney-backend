@@ -1,6 +1,6 @@
 import {AddDataDto, DeleteDataDto, UpdateDataDto} from './DTO/dataDTO';
 import ipfsFileService, {IpfsFileService} from '../ipfs/ipfs-file-service';
-import {Entries} from '../ipfs/ipfsModels';
+import {Entries, Entry} from '../ipfs/ipfsModels';
 import {Data} from '../models/data';
 import {HashUtils} from '../shared/HashUtils';
 
@@ -14,7 +14,7 @@ class DataService {
                     data: dto.data,
                     hash: HashUtils.createSha256Hash(HashUtils.getRandomText()),
                 } as Data;
-                if (!userDirElements.Entries.some(element => element.Name === IpfsFileService.USER_DATA_DIR)) {
+                if (!userDirElements.Entries.some((entry: Entry) => entry.Name === IpfsFileService.USER_DATA_DIR)) {
                     return ipfsFileService.createDir(`/${IpfsFileService.USERS_DIR}/${dto.accountId}/data`)
                         .then((res) => {
                             return ipfsFileService.addFile(`/${IpfsFileService.USERS_DIR}/${dto.accountId}/${IpfsFileService.USER_DATA_DIR}`, data.hash, data);

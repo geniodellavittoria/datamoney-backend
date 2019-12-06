@@ -24,6 +24,7 @@ class UserService {
             publicWalletId: HashUtils.createSha256Hash(HashUtils.getRandomText()),
             username: dto.username,
             password: dto.password,
+            publicKey: HashUtils.createSha256Hash(HashUtils.getRandomText()),
         } as User;
     }
 

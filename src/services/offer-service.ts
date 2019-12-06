@@ -23,6 +23,7 @@ class OfferService {
         return ipfsFileService.getElementsFromDir()
             .then((offersDirFiles: Entries) => {
                 const hash = HashUtils.createSha256Hash(HashUtils.getRandomText());
+                offer.id = hash;
                 if (!offersDirFiles.Entries.some((entry: Entry) => entry.Name === IpfsFileService.OFFERS_DIR)) {
                     return ipfsFileService.createDir(`/${IpfsFileService.OFFERS_DIR}`)
                         .then((res) => {
