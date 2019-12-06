@@ -8,8 +8,7 @@ class DataService {
 
     public async add(dto: AddDataDto) {
         return ipfsFileService.getElementsFromDir(`${IpfsFileService.USERS_DIR}/${dto.accountId}`)
-            .then((userDirElementsBody: string) => {
-                const userDirElements = JSON.parse(userDirElementsBody) as Entries;
+            .then((userDirElements: Entries) => {
                 const data = {
                     ownerId: dto.accountId,
                     data: dto.data,
@@ -38,12 +37,11 @@ class DataService {
   public async get(userId: string) {
     const path = `users/${userId}/data/`;
     return ipfsFileService.getElementsFromDir(path)
-      .then((userDataDirElementsBody: string) => {
-        const userDirElements = JSON.parse(userDataDirElementsBody) as Entries;
-        return userDirElements.Entries;
+      .then((userDataDirElements: Entries) => {
+        return userDataDirElements.Entries;
       })
       .then((entries) => {
-        let filePromises: Promise<Data>[] = [];
+        const filePromises: Array<Promise<Data>> = [];
         entries.forEach((entry) => {
           filePromises.push(ipfsFileService.getFile<Data>(`${path}${entry.Hash}`));
         });

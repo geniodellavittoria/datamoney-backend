@@ -1,8 +1,8 @@
-import { UserLoginDto, UserRegisterDto } from './DTO/userDTO';
-import ipfsFileService, { IpfsFileService } from '../ipfs/ipfs-file-service';
-import { User } from '../models/user';
-import { Entries, Entry } from '../ipfs/ipfsModels';
-import { HashUtils } from '../shared/HashUtils';
+import {UserLoginDto, UserRegisterDto} from './DTO/userDTO';
+import ipfsFileService, {IpfsFileService} from '../ipfs/ipfs-file-service';
+import {User} from '../models/user';
+import {Entries, Entry} from '../ipfs/ipfsModels';
+import {HashUtils} from '../shared/HashUtils';
 
 
 class UserService {
@@ -39,8 +39,7 @@ class UserService {
 
     public async login(dto: UserLoginDto) {
         return ipfsFileService.getElementsFromDir(`users/${dto.username}`)
-            .then((userDirElementsBody: string) => {
-                const userDirElements = JSON.parse(userDirElementsBody) as Entries;
+            .then((userDirElements: Entries) => {
                 console.log(userDirElements);
                 if (userDirElements != null) {
                     const userDetails = userDirElements.Entries.filter((entry: Entry) => entry.Name === IpfsFileService.USER_DETAILS);

@@ -4,6 +4,16 @@ import {ErrorMessage} from '../services/DTO/errorMessage';
 import offerService from '../services/offer-service';
 
 
+export async function getOffers(req: Request, res: Response) {
+    offerService.getOffers()
+        .then((orderRes) => {
+            console.log(orderRes);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+
 export async function addOffer(req: Request, res: Response) {
     const offer = req.body as Offer;
     if (offer == null) {

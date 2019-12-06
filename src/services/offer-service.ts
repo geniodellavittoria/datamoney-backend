@@ -6,12 +6,19 @@ import {HashUtils} from '../shared/HashUtils';
 
 class OfferService {
 
+    getOffers() {
+        return ipfsFileService.getElementsFromDir(`${IpfsFileService.OFFERS_DIR}/`)
+            .then((offers: Entries) => {
+                console.log(res);
+                //const paths
+            })
+    }
+
     addOffer(offer: Offer) {
         return ipfsFileService.getElementsFromDir()
-            .then((offersDirFilesString: string) => {
+            .then((offersDirFiles: Entries) => {
                 const hash = HashUtils.createSha256Hash(HashUtils.getRandomText());
-                const offerDirFiles = JSON.parse(offersDirFilesString) as Entries;
-                if (!offerDirFiles.Entries.some((entry: Entry) => entry.Name === IpfsFileService.OFFERS_DIR)) {
+                if (!offersDirFiles.Entries.some((entry: Entry) => entry.Name === IpfsFileService.OFFERS_DIR)) {
                     return ipfsFileService.createDir(`/${IpfsFileService.OFFERS_DIR}`)
                         .then((res) => {
                             ipfsFileService.addFileAndCopy(`${IpfsFileService.OFFERS_DIR}/`, hash, offer);

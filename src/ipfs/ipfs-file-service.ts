@@ -1,6 +1,7 @@
 import request from 'request';
-import { ipfsApi } from '../config/api';
+import {ipfsApi} from '../config/api';
 import * as rp from 'request-promise-native';
+import {Entries} from './ipfsModels';
 
 request.debug = true;
 
@@ -22,7 +23,14 @@ export class IpfsFileService {
       path = `${path}arg=/&`;
     }
     path = `${path}l=true&U=true`;
-    return rp.get(path);
+    return rp.get(path)
+        .then((dirs: string) => {
+          const data = JSON.parse(dirs) as Entries;
+          return new Promise<Entries>(
+              (resolve, reject) => {
+                resolve(data);
+              });
+        });
   }
 
   public addFileAndCopy(path: string, filename: string, data: any) {
