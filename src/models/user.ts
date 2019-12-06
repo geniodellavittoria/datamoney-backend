@@ -6,4 +6,5 @@ export interface User {
   username: string;
   password?: string;
   publicKey: string;
+  balance: number;
 }

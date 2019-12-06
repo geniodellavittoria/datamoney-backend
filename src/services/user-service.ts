@@ -25,6 +25,7 @@ class UserService {
             username: dto.username,
             password: dto.password,
             publicKey: HashUtils.createSha256Hash(HashUtils.getRandomText()),
+            balance: 0,
         } as User;
     }
 
