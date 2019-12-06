@@ -1,8 +1,8 @@
-import {UserLoginDto, UserRegisterDto} from './DTO/userDTO';
-import ipfsFileService, {IpfsFileService} from '../ipfs/ipfs-file-service';
-import {User} from '../models/user';
-import {Entries, Entry} from '../ipfs/ipfsModels';
-import {HashUtils} from '../shared/HashUtils';
+import { UserLoginDto, UserRegisterDto } from './DTO/userDTO';
+import ipfsFileService, { IpfsFileService } from '../ipfs/ipfs-file-service';
+import { User } from '../models/user';
+import { Entries, Entry } from '../ipfs/ipfsModels';
+import { HashUtils } from '../shared/HashUtils';
 
 
 class UserService {
