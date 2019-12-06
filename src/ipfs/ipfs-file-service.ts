@@ -1,5 +1,5 @@
 import request from 'request';
-import {ipfsApi} from '../config/api';
+import { ipfsApi } from '../config/api';
 import * as rp from 'request-promise-native';
 
 request.debug = true;
@@ -27,13 +27,13 @@ export class IpfsFileService {
 
   public addFileAndCopy(path: string, filename: string, data: any) {
     return this.addFile(path, filename, data)
-        .then((file) => {
-          const hashResponses = file.split('\n');
-          if (hashResponses.length > 1) {
-            return ipfsFileService.copy(path, JSON.parse(hashResponses[1]));
-          }
-          throw Error('Could not add file to ipfs');
-        });
+      .then((file) => {
+        const hashResponses = file.split('\n');
+        if (hashResponses.length > 1) {
+          return ipfsFileService.copy(path, JSON.parse(hashResponses[1]));
+        }
+        throw Error('Could not add file to ipfs');
+      });
   }
 
   public addFile(path: string, filename: string, data: any) {
@@ -56,16 +56,6 @@ export class IpfsFileService {
       return new Promise<T>(
         (resolve, reject) => {
           resolve(data);
-        });
-    });
-  }
-
-  public getFiles(paths: string[] = ['']) {
-    const files = [];
-    paths.forEach((pathToResource) => {
-      this.getFile(pathToResource)
-        .then((file) => {
-          files.push(file);
         });
     });
   }
