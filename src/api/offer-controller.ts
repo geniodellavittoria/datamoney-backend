@@ -8,6 +8,7 @@ export async function getOffers(req: Request, res: Response) {
     offerService.getOffers()
         .then((orderRes) => {
             console.log(orderRes);
+            res.send(orderRes);
         })
         .catch((err) => {
             console.log(err);
