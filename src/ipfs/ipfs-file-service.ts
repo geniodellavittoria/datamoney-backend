@@ -19,6 +19,8 @@ export class IpfsFileService {
     let path = `${ipfsApi.files}/ls?`;
     if (dir !== '') {
       path = `${path}arg=/${dir}&`;
+    } else {
+      path = `${path}arg=/&`;
     }
     path = `${path}l=true&U=true`;
     return rp.get(path);
@@ -52,7 +54,6 @@ export class IpfsFileService {
     const path = `${ipfsApi.files}/read?arg=/${pathToResource}`;
     return rp.get(path).then((dataString) => {
       const data = JSON.parse(dataString) as Data;
-      console.log(data);
       return new Promise<Data>(
         (resolve, reject) => {
           resolve(data);
@@ -72,7 +73,7 @@ export class IpfsFileService {
 
   // needed to display file on ipfs UI
   public copy(dir: string, hashResponse: any) {
-    let path = `${ipfsApi.files}/cp?arg=/ipfs/${hashResponse.Hash}&arg=${dir}&stream-channels=true`;
+    let path = `${ipfsApi.files}/cp?arg=/ipfs/${hashResponse.Hash}&arg=/${dir}&stream-channels=true`;
     return rp.post(path);
   }
 }
