@@ -1,7 +1,6 @@
 import request from 'request';
 import {ipfsApi} from '../config/api';
 import * as rp from 'request-promise-native';
-import {Data} from 'src/models/data';
 
 request.debug = true;
 
@@ -50,11 +49,11 @@ export class IpfsFileService {
     return rp.get(path);
   }
 
-  public getFile(pathToResource: string = '') {
+  public getFile<T>(pathToResource: string = ''): Promise<T> {
     const path = `${ipfsApi.files}/read?arg=/${pathToResource}`;
     return rp.get(path).then((dataString) => {
-      const data = JSON.parse(dataString) as Data;
-      return new Promise<Data>(
+      const data = JSON.parse(dataString) as T;
+      return new Promise<T>(
         (resolve, reject) => {
           resolve(data);
         });

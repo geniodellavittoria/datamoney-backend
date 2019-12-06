@@ -12,9 +12,8 @@ export function login(req: Request, res: Response) {
         return res.status(401).send(new ErrorMessage(401, 'Could not login. Please check role and pin.'));
     }
     userService.login(loginForm)
-        .then((userDetailsBody: string)  => {
-            const userDetails = JSON.parse(userDetailsBody) as User;
-            return res.send({ token: generateAuthToken(userDetails) });
+        .then((user: User | void)  => {
+            return res.send({ token: generateAuthToken(user) });
         })
         .catch((err: any) => {
             res.status(400).json(new ErrorMessage(400, 'Could not log in user!'));
