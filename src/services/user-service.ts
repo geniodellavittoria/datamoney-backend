@@ -22,7 +22,7 @@ class UserService {
         dto.walletId = HashUtils.createSha256Hash(HashUtils.getRandomText());
         return {
             id: HashUtils.createSha256Hash(HashUtils.getRandomText()),
-            role: 'patient',
+            role: dto.role,
             privateWalletId: HashUtils.createSha256Hash(HashUtils.getRandomText()),
             publicWalletId: HashUtils.createSha256Hash(HashUtils.getRandomText()),
             username: dto.username,
