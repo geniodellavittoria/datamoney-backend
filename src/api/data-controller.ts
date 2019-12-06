@@ -20,11 +20,9 @@ export async function get(req: Request, res: Response) {
     const userId = req.params.userId;
     dataService.get(userId)
         .then((dataRes) => {
-            console.log(dataRes);
             res.send({ dataFragment: dataRes });
         })
         .catch((err) => {
-            console.log(err);
             res.status(400).send(new ErrorMessage(400, 'Could not get data'));
         });
 }
