@@ -44,8 +44,8 @@ class DataService {
       })
       .then((entries) => {
         let filePromises: Promise<Data>[] = [];
-        entries.forEach(entry => {
-          filePromises.push(ipfsFileService.getFile(`${path}${entry.Hash}`))
+        entries.forEach((entry) => {
+          filePromises.push(ipfsFileService.getFile<Data>(`${path}${entry.Hash}`));
         });
         return Promise.all(filePromises);
       });

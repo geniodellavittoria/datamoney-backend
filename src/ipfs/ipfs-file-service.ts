@@ -1,7 +1,6 @@
 import request from 'request';
 import {ipfsApi} from '../config/api';
 import * as rp from 'request-promise-native';
-import {Data} from 'src/models/data';
 
 request.debug = true;
 
@@ -19,6 +18,8 @@ export class IpfsFileService {
     let path = `${ipfsApi.files}/ls?`;
     if (dir !== '') {
       path = `${path}arg=/${dir}&`;
+    } else {
+      path = `${path}arg=/&`;
     }
     path = `${path}l=true&U=true`;
     return rp.get(path);
@@ -48,12 +49,11 @@ export class IpfsFileService {
     return rp.get(path);
   }
 
-  public getFile(pathToResource: string = '') {
+  public getFile<T>(pathToResource: string = ''): Promise<T> {
     const path = `${ipfsApi.files}/read?arg=/${pathToResource}`;
     return rp.get(path).then((dataString) => {
-      const data = JSON.parse(dataString) as Data;
-      console.log(data);
-      return new Promise<Data>(
+      const data = JSON.parse(dataString) as T;
+      return new Promise<T>(
         (resolve, reject) => {
           resolve(data);
         });
@@ -72,7 +72,7 @@ export class IpfsFileService {
 
   // needed to display file on ipfs UI
   public copy(dir: string, hashResponse: any) {
-    let path = `${ipfsApi.files}/cp?arg=/ipfs/${hashResponse.Hash}&arg=${dir}&stream-channels=true`;
+    let path = `${ipfsApi.files}/cp?arg=/ipfs/${hashResponse.Hash}&arg=/${dir}&stream-channels=true`;
     return rp.post(path);
   }
 }

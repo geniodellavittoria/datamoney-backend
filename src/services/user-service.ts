@@ -45,7 +45,7 @@ class UserService {
                 if (userDirElements != null) {
                     const userDetails = userDirElements.Entries.filter((entry: Entry) => entry.Name === IpfsFileService.USER_DETAILS);
                     if (userDetails != null && userDetails.length > 0) {
-                        return ipfsFileService.getFile(`${IpfsFileService.USERS_DIR}/${dto.username}/${IpfsFileService.USER_DETAILS}`);
+                        return ipfsFileService.getFile<User>(`${IpfsFileService.USERS_DIR}/${dto.username}/${IpfsFileService.USER_DETAILS}`);
                     }
                 }
             })

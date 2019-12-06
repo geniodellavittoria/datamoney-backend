@@ -7,6 +7,7 @@ import authRouter from './routes/auth-router';
 import userRouter from './routes/user-router';
 import request from 'request';
 import dataRouter from './routes/data-router';
+import offerRouter from './routes/offer-router';
 
 request.debug = true;
 // Init express
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1', authRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1', dataRouter);
+app.use('/api/v1/offer', offerRouter);
 
 
 // Export express instance
