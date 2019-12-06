@@ -1,10 +1,7 @@
-import { Request, Response } from 'express';
+import {Request, Response} from 'express';
 import dataService from '../services/data-service';
-import { AddDataDto, GetDataDto } from '../services/DTO/dataDTO';
-import { ErrorMessage } from '../services/DTO/errorMessage';
-import { logger } from '../shared/logger';
-import { RESET_CONTENT } from 'http-status-codes';
-import { Data } from 'src/models/data';
+import {AddDataDto} from '../services/DTO/dataDTO';
+import {ErrorMessage} from '../services/DTO/errorMessage';
 
 export async function create(req: Request, res: Response) {
     const addDataDto = req.body as AddDataDto;
@@ -20,11 +17,11 @@ export async function create(req: Request, res: Response) {
 }
 
 export async function get(req: Request, res: Response) {
-    const getDataDto = req.body as GetDataDto;
-    dataService.get(getDataDto)
+    const userId = req.params.userId;
+    dataService.get(userId)
         .then((dataRes) => {
             console.log(dataRes);
-            res.send(JSON.parse(JSON.stringify(dataRes)));
+            res.send({ dataFragment: dataRes });
         })
         .catch((err) => {
             console.log(err);

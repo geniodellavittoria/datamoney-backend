@@ -1,10 +1,7 @@
 import request from 'request';
-import { ipfsApi } from '../config/api';
+import {ipfsApi} from '../config/api';
 import * as rp from 'request-promise-native';
-import { file, fileSync } from 'find';
-import { Data } from 'src/models/data';
-import { resolve } from 'dns';
-import { rejects } from 'assert';
+import {Data} from 'src/models/data';
 
 request.debug = true;
 
@@ -13,6 +10,8 @@ export class IpfsFileService {
   public static USERS_DIR = 'users';
   public static USER_DETAILS = 'userdetails';
   public static USER_DATA_DIR = 'data';
+  public static OFFERS_DIR = 'offers';
+
   /**
    * @param dir path (not hashes!)
    */
@@ -25,6 +24,17 @@ export class IpfsFileService {
     return rp.get(path);
   }
 
+  public addFileAndCopy(path: string, filename: string, data: any) {
+    return this.addFile(path, filename, data)
+        .then((file) => {
+          const hashResponses = file.split('\n');
+          if (hashResponses.length > 1) {
+            return ipfsFileService.copy(path, JSON.parse(hashResponses[1]));
+          }
+          throw Error('Could not add file to ipfs');
+        });
+  }
+
   public addFile(path: string, filename: string, data: any) {
     let url = `${ipfsApi.add}?pin=false&wrapWithDirectory=false&progress=true&wrap-with-directory=false&stream-channels=true`;
     return rp.post({
@@ -34,19 +44,19 @@ export class IpfsFileService {
   }
 
   public createDir(folderPath: string) {
-    let path = `${ipfsApi.files}/mkdir?arg=/users/${folderPath}`;
+    let path = `${ipfsApi.files}/mkdir?arg=${folderPath}`;
     return rp.get(path);
   }
 
   public getFile(pathToResource: string = '') {
     const path = `${ipfsApi.files}/read?arg=/${pathToResource}`;
     return rp.get(path).then((dataString) => {
-      const data = dataString as Data;
+      const data = JSON.parse(dataString) as Data;
       console.log(data);
       return new Promise<Data>(
         (resolve, reject) => {
           resolve(data);
-        })
+        });
     });
   }
 

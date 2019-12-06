@@ -7,3 +7,5 @@ userDir (id)
 soldDataDir (one per buyer)
 --data.ts (dataXYZ.json)
 
+offers
+--offer.ts

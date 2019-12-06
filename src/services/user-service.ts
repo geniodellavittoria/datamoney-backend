@@ -4,14 +4,11 @@ import {User} from '../models/user';
 import {Entries, Entry} from '../ipfs/ipfsModels';
 import {HashUtils} from '../shared/HashUtils';
 
-const ipfsClient = require('ipfs-http-client');
-
 
 class UserService {
-    private ipfs = ipfsClient('http://localhost:5001');
 
     public async register(dto: UserRegisterDto) {
-        return ipfsFileService.createDir(dto.username)
+        return ipfsFileService.createDir(`/${IpfsFileService.USERS_DIR}/${dto.username}`)
             .then((res) => {
                 const user = userService.createUser(dto);
                 return userService.createUserDetails(user);
