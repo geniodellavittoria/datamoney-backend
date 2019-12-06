@@ -1,6 +1,10 @@
 import request from 'request';
-import {ipfsApi} from '../config/api';
+import { ipfsApi } from '../config/api';
 import * as rp from 'request-promise-native';
+import { file, fileSync } from 'find';
+import { Data } from 'src/models/data';
+import { resolve } from 'dns';
+import { rejects } from 'assert';
 
 request.debug = true;
 
@@ -36,7 +40,24 @@ export class IpfsFileService {
 
   public getFile(pathToResource: string = '') {
     const path = `${ipfsApi.files}/read?arg=/${pathToResource}`;
-    return rp.get(path);
+    return rp.get(path).then((dataString) => {
+      const data = dataString as Data;
+      console.log(data);
+      return new Promise<Data>(
+        (resolve, reject) => {
+          resolve(data);
+        })
+    });
+  }
+
+  public getFiles(paths: string[] = ['']) {
+    const files = [];
+    paths.forEach((pathToResource) => {
+      this.getFile(pathToResource)
+        .then((file) => {
+          files.push(file);
+        });
+    });
   }
 
   // needed to display file on ipfs UI

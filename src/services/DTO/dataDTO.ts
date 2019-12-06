@@ -13,3 +13,7 @@ export interface DeleteDataDto {
   accountId: string;
   dataId: string;
 }
+
+export interface GetDataDto {
+  accountId: string;
+}

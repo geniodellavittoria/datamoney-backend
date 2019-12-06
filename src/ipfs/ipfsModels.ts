@@ -9,4 +9,3 @@ export interface Entry {
 export interface Entries {
     Entries: Entry[];
 }
-
