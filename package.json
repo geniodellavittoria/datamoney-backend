@@ -22,7 +22,7 @@
     "interface-ipfs-core": "^0.123.0",
     "ipfs": "^0.39.0",
     "ipfs-http-client": "^40.0.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "module-alias": "^2.2.2",
     "morgan": "^1.9.1",
     "request": "^2.88.0",
